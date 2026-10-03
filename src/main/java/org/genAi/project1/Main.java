@@ -11,13 +11,17 @@ public class Main {
 
         String systemPrompt = "You are concise. You give output clear and straightforward";
         String userPrompt = "Which are the best place to see fall color in New England.";
+        int maxOutputToken = 500;
 
         OllamaClient ollamaClient = new OllamaClient();
-        OllamaResponse response = ollamaClient.sendRequest(systemPrompt, userPrompt);
+        OllamaResponse response = ollamaClient.sendRequest(systemPrompt, userPrompt, maxOutputToken);
 
         System.out.println(response.usage());
         for(Content content : response.content()) {
-            System.out.println(content.text());
+            if(content.text() != null && !content.text().isEmpty()) {
+                System.out.println(content.text());
+            }
+
         }
 
     }
